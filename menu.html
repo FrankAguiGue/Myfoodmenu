@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+		<head>
+		<link rel="icon" type="image/png" href="img/icon.png" sizes="96x96">
+		<meta charset="UTF-8"> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.4/utils/Draggable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.4/TweenMax.min.js"></script>
+
+		<title>MyFoodMenu</title> 
+		<link rel="stylesheet" href="css/estilo2.css"> 
+		</head>
+		<body id="captura">
+			<header>
+			<form class="menu">
+                <select name="CambiarFondo" id="mySelection" onchange="fondo()">
+                       <option value="img/fondo2.jpg">Fondo 1
+                           </option><option value="img/fondo4.jpg">Fondo 2
+                               </option><option value="img/fondo3.jpg">Fondo 3
+                                   </option></select>
+            </form>
+            <script>
+            function fondo(){
+                var seleccionar = document.getElementById("mySelection").value;
+                document.getElementById("captura").style.backgroundImage = "url(' "+ seleccionar+"')";
+            }
+            </script>
+			<img class="logo" src="img/logo3.png">
+			<a href="index.html"><img class="salir" src="img/salir.gif"></a>
+			</header> 
+			<div>
+			<p class="slogan">Añade nuevos platillos o reorganiza los existentes</p>
+			</div>
+			<div style="
+    padding-top: 65px;
+">
+    <div class="item-content" style="
+    position: relative;
+    top: 50%;
+    left: 50%;
+    width: 320px;
+    transform: translate(-50%, -50%);
+">
+
+      <span class="order">+</span><img class="salir" src="https://image.flaticon.com/icons/png/512/37/37770.png"> Añadir platillo
+	</div>
+</div>
+<section class="container">
+  
+  <div class="list-item">
+    <div class="item-content">
+      <span class="order">1</span><img class="salir" src="https://cocina-casera.com/wp-content/uploads/2016/11/hamburguesa-queso-receta.jpg"> Hamburguesa</div>
+  </div>
+  
+  <div class="list-item">
+    <div class="item-content">
+      <span class="order">2</span> <img class="salir" src="https://lh3.googleusercontent.com/proxy/uX3nQhxW19-kSxpQqpzW73YDBVxlvO2bxD26OYJvtJzNG7GMNTtuIoAFv-sRFEEqAfv0Zs5ojTh_t1DacVuWLzpeQ0Ri0mhq8wYukDkP4XX_pEttpQM3_EakQk6t84WMvR5nz7KYH_ZiYCehSXfYvGrlu-kgTEDZN9hZUDOglviAfJcQ2I-aZ88"> Taco
+    </div>
+  </div>
+  
+  <div class="list-item">
+    <div class="item-content">
+      <span class="order">3</span> <img class="salir" src="https://t2.rg.ltmcdn.com/es/images/1/3/0/img_hacer_sushi_paso_a_paso_16031_orig.jpg"> Sushi
+    </div>
+  </div>
+  
+  <div class="list-item">
+    <div class="item-content">
+      <span class="order">4</span> <img class="salir" src="https://cdn2.cocinadelirante.com/sites/default/files/styles/gallerie/public/images/2017/04/pizzapepperoni0.jpg"> Pizza
+    </div>
+  </div>
+  
+</section>
+		
+		
+		<script>
+		var rowSize   = 100; // => container height / number of items
+var container = document.querySelector(".container");
+var listItems = Array.from(document.querySelectorAll(".list-item")); // Array of elements
+var sortables = listItems.map(Sortable); // Array of sortables
+var total     = sortables.length;
+
+TweenLite.to(container, 0.5, { autoAlpha: 1 });
+
+function changeIndex(item, to) {
+    
+  // Change position in array
+  arrayMove(sortables, item.index, to);
+    
+  // Change element's position in DOM. Not always necessary. Just showing how.
+  if (to === total - 1) {
+    container.appendChild(item.element);    
+  } else {    
+    var i = item.index > to ? to : to + 1;
+    container.insertBefore(item.element, container.children[i]);
+  }    
+    
+  // Set index for each sortable
+  sortables.forEach((sortable, index) => sortable.setIndex(index));
+}
+
+function Sortable(element, index) {
+    
+  var content = element.querySelector(".item-content");
+  var order   = element.querySelector(".order");
+  
+  var animation = TweenLite.to(content, 0.3, {
+    boxShadow: "rgba(0,0,0,0.2) 0px 16px 32px 0px",
+    force3D: true,
+    scale: 1.1,
+    paused: true
+  });
+  
+  var dragger = new Draggable(element, {        
+    onDragStart: downAction,
+    onRelease: upAction,
+    onDrag: dragAction,
+    cursor: "inherit",    
+    type: "y"
+  });
+  
+  // Public properties and methods
+  var sortable = {
+    dragger:  dragger,
+    element:  element,
+    index:    index,
+    setIndex: setIndex
+  };
+  
+  TweenLite.set(element, { y: index * rowSize });
+    
+  function setIndex(index) {
+    
+    sortable.index = index;    
+    order.textContent = index + 1;
+    
+    // Don't layout if you're dragging
+    if (!dragger.isDragging) layout();
+  }
+  
+  function downAction() {
+    animation.play();
+    this.update();
+  }
+  
+  function dragAction() {
+    
+    // Calculate the current index based on element's position
+    var index = clamp(Math.round(this.y / rowSize), 0, total - 1);
+    
+    if (index !== sortable.index) {
+      changeIndex(sortable, index);
+    }
+  }
+  
+  function upAction() {
+    animation.reverse();
+    layout();
+  }
+  
+  function layout() {    
+    TweenLite.to(element, 0.3, { y: sortable.index * rowSize });  
+  }
+    
+  return sortable;
+}
+
+// Changes an elements's position in array
+function arrayMove(array, from, to) {
+  array.splice(to, 0, array.splice(from, 1)[0]);
+}
+
+// Clamps a value to a min/max
+function clamp(value, a, b) {
+  return value < a ? a : (value > b ? b : value);
+}
+
+
+
+		</script>
+		</body>
+</html> 

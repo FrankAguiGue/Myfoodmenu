@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+		<head>
+		<link rel="icon" type="image/png" href="img/icon.png" sizes="96x96">
+		<meta charset="UTF-8"> 
+		<title>MyFoodMenu</title> 
+		<link rel="stylesheet" href="css/estilo.css"> 
+		</head>
+		<body>
+
+			<header>
+			<img class="logo" src="img/logo3.png">
+			</header> 
+			<div>
+		<p class="slogan">¿Eres nuevo? Regístrate para crear tu menú y dar a conocer tus platillos</p>
+		</div>
+			<div class="login">
+  <div class="form"  >
+    <form class="login-form" name="validar">
+      <input type="text" placeholder="Nombre" name="nombre" />
+	  <input type="text" placeholder="Nombre del restaurante" name="nombre del restaurante" />
+<input type="text" placeholder="Télefono" name="télefono" />	  
+      <input type="password" placeholder="Contraseña" name="contrasena" />
+      <input type="text" placeholder="Correo Electronico" name="email" />
+      <input type="button" onclick="validar_datos()" Value="Crear" class="button"/>
+       <!--onclick="playAudio('musica/registro.mpeg')"-->
+      <p class="texto">¿Ya tiene una cuenta? <a href="index.html">Iniciar Sesión</a></p>
+    </form>
+  </div>
+</div>
+				<footer>
+		<p class="footer">MyFoodMenu. 2020 Todos los derechos reservados.</p>
+		</footer>
+<div id="registrado" class="modalDialog">
+	<div>
+		<a href="#close" title="Close" class="close">X</a>
+		<br>
+		<h2>Usuario registrado Exitosamente.</h2>
+		<br>
+		<p>Haz click en OK para iniciar sesión.</p>
+		<br>
+		<a href="index.html">OK</a>
+	</div>
+</div>
+<script>
+
+function validar_datos(){
+
+
+location.href="#registrado"
+
+}
+</script>
+		</body>
+</html> 
