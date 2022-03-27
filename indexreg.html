@@ -2,6 +2,7 @@
 <html lang="es">
 		<head>
 		<link rel="icon" type="image/png" href="img/icon.png" sizes="96x96">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta charset="UTF-8"> 
 		<title>MyFoodMenu</title> 
 		<link rel="stylesheet" href="css/estilo.css"> 
@@ -16,15 +17,16 @@
 		</div>
 			<div class="login">
   <div class="form"  >
-    <form class="login-form" name="validar">
-      <input type="text" placeholder="Nombre" name="nombre" />
-	  <input type="text" placeholder="Nombre del restaurante" name="nombre del restaurante" />
-<input type="text" placeholder="Télefono" name="télefono" />	  
-      <input type="password" placeholder="Contraseña" name="contrasena" />
-      <input type="text" placeholder="Correo Electronico" name="email" />
-      <input type="button" onclick="validar_datos()" Value="Crear" class="button"/>
+    <form class="login-form" action="reguser.php" method="POST" >
+      <input type="text" placeholder="Nombre" name="name" type="text" required/>
+	  <input type="text" placeholder="Nombre del restaurante" name="restname" type="text" required />
+<input type="text" placeholder="Télefono" type="number" name="tel" required/>	  
+      <input type="password" placeholder="Contraseña" name="pass" minlength="8" pattern="^(?=.*?[a-z])(?=.*?[0-9]).{7,}$" type="password" title="la contraseña debería de tener  un número y una mayúscula" required/>
+      <input type="email" placeholder="Correo Electronico" name="email" type="email" required/>
+            <button class="button">Crear</button>
+      <!--<input type="button"  Value="Crear" type="submit" class="button"/>
        <!--onclick="playAudio('musica/registro.mpeg')"-->
-      <p class="texto">¿Ya tiene una cuenta? <a href="index.html">Iniciar Sesión</a></p>
+      <p class="texto">¿Ya tiene una cuenta? <a href="login.html">Iniciar Sesión</a></p>
     </form>
   </div>
 </div>
@@ -39,17 +41,9 @@
 		<br>
 		<p>Haz click en OK para iniciar sesión.</p>
 		<br>
-		<a href="index.html">OK</a>
+		<a href="login.html">OK</a>
 	</div>
 </div>
-<script>
 
-function validar_datos(){
-
-
-location.href="#registrado"
-
-}
-</script>
 		</body>
 </html> 

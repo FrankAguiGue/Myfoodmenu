@@ -1,0 +1,15 @@
+{
+  "background_color": "white",
+  "description": "My Food Menu",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "img/logoapp.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "name": "My Food Menu",
+  "short_name": "My Food Menu",
+  "start_url": "index.html"
+}
